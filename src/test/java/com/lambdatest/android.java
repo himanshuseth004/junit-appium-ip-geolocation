@@ -21,8 +21,6 @@ public class android {
             : System.getenv("LT_ACCESS_KEY");
     public static RemoteWebDriver driver = null;
     public String gridURL = "@mobile-hub.lambdatest.com/wd/hub";
-
-    //MARKING TEST AS PASSED
     public String status = "passed";
     @Before
     public void setUp() throws Exception {
@@ -34,11 +32,15 @@ public class android {
         capabilities.setCapability("deviceName", "Pixel 6"); //Enter the name of the device here
         capabilities.setCapability("isRealMobile", true);
         capabilities.setCapability("platformVersion","12");
-        capabilities.setCapability("app","App_ID"); //Enter the App ID here
+        capabilities.setCapability("app","APP_URL"); //Enter the App ID here
         capabilities.setCapability("deviceOrientation", "PORTRAIT");
         capabilities.setCapability("console",true);
         capabilities.setCapability("network",true);
         capabilities.setCapability("visual",true);
+        
+        //ADD GEOLOCATION BASED ON COUNTRY CODE
+        capabilities.setCapability("geoLocation", "fr");
+        
         try
         {
             driver = new RemoteWebDriver(new URL("https://" + username + ":" + accessKey + gridURL), capabilities);
@@ -79,13 +81,11 @@ public class android {
             Thread.sleep(5000);
             driver.navigate().back();
 
-            //MARKING TEST AS PASSED
             status="passed"; 
         }
             catch (Exception e)
              {
                 System.out.println(e.getMessage());
-                //MARKING TEST AS FAILED
                 status="failed";
              }
     }
@@ -99,4 +99,3 @@ public class android {
         }
     }
 }
-
